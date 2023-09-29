@@ -1,0 +1,4 @@
+﻿  Source.cpp
+C:\Users\Всеволод\Desktop\МОКГ лабы\MBCG_Lab0\MBCG_Lab0\Source.cpp(86,26): warning C4312: приведение типов: преобразование из "int" в "HBRUSH" большего размера
+C:\Users\Всеволод\Desktop\МОКГ лабы\MBCG_Lab0\MBCG_Lab0\Source.cpp(95): warning C4715: windowProcedure: значение возвращается не при всех путях выполнения
+  MBCG_Lab0.vcxproj -> C:\Users\Всеволод\Desktop\МОКГ лабы\MBCG_Lab0\x64\Debug\MBCG_Lab0.exe
