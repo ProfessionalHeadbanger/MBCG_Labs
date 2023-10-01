@@ -43,7 +43,6 @@ LRESULT CALLBACK windowProcedure(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
 {
 	HDC hdc = NULL;
 	static POINT pt, point_next;
-	static bool mouse_move = false, is_left_button = false;
 
 	switch (msg)
 	{
@@ -62,30 +61,28 @@ LRESULT CALLBACK windowProcedure(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
 		return DefWindowProc(hWnd, msg, wp, lp);
 		break;
 	case WM_MOUSEMOVE:
-		if (is_left_button)
+		if (circle.isDragging())
 		{
 			GetCursorPos(&point_next);
 			ScreenToClient(hWnd, &point_next);
-//			if (point_next.x != pt.x && point_next.y != pt.y)
-			{
-				circle.move(point_next.x, point_next.y);
-				InvalidateRect(hWnd, nullptr, false);
-//				mouse_move = false;
-			}
+			circle.drag(point_next.x, point_next.y);
+			InvalidateRect(hWnd, nullptr, false);
 		}
 		break;
 	case WM_LBUTTONUP:
-		is_left_button = false;
+		circle.stopDragging();
 		break;
 	case WM_LBUTTONDOWN:
-
 		GetCursorPos(&pt);
 		ScreenToClient(hWnd, &pt);
 		if (!circle.isInnerPoint(pt.x, pt.y)) {
 			circle.move(pt.x, pt.y);
 			InvalidateRect(hWnd, nullptr, false);
 		}
-		else is_left_button = true;
+		else
+		{
+			circle.startDragging();
+		}
 		break;
 	default:
 		return DefWindowProc(hWnd, msg, wp, lp);

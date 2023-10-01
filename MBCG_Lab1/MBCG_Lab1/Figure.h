@@ -14,10 +14,10 @@ public:
 	void moveTo(const int x, const int y);
 	void move(const int x, const int y);
 
-	void startDragging(const int x, const int y);
+	void startDragging();
 	void drag(const int x, const int y);
 	bool isDragging() const;
-	void stopDragging(const int x, const int y);
+	void stopDragging();
 
 private:
 	bool m_isDragging;

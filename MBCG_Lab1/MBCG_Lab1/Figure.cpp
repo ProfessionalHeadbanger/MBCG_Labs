@@ -20,13 +20,14 @@ void Figure::move(const int x, const int y)
     moveTo(x, y);
 }
 
-void Figure::startDragging(const int x, const int y)
+void Figure::startDragging()
 {
+    m_isDragging = true;
 }
 
 void Figure::drag(const int x, const int y)
 {
-    
+    move(x, y);
 }
 
 bool Figure::isDragging() const
@@ -34,7 +35,7 @@ bool Figure::isDragging() const
     return m_isDragging;
 }
 
-void Figure::stopDragging(const int x, const int y)
+void Figure::stopDragging()
 {
     m_isDragging = false;
 }
