@@ -1,9 +1,5 @@
 #include "Model2D.h"
 
-Model2D::Model2D(const std::vector<Vector2D>& vertices, const std::vector<int> indices) : m_vertices(vertices),	m_indices(indices)
-{
-}
-
 Model2D::Model2D(const std::string path, double dX, double dY)
 {
 	Loader loader(path);
@@ -23,9 +19,72 @@ void Model2D::draw(const HDC& hdc)
 	delete[] vertices;
 }
 
-void Model2D::apply(Matrix<> transformMat)
+void Model2D::Shift(double x, double y)
 {
-	m_modelMatrix = transformMat * m_modelMatrix;
+	int tempX = getFirstCoordinate().first;
+	int tempY = getFirstCoordinate().second;
+	m_modelMatrix = Translation(-tempX, -tempY) * m_modelMatrix;
+	m_modelMatrix = Translation(x, y) * m_modelMatrix;
+	m_modelMatrix = Translation(tempX, tempY) * m_modelMatrix;
+}
+
+void Model2D::RotateRight()
+{
+	int tempX = getFirstCoordinate().first;
+	int tempY = getFirstCoordinate().second;
+	m_modelMatrix = Translation(-tempX, -tempY) * m_modelMatrix;
+	m_modelMatrix = Rotation(rotation_angle) * m_modelMatrix;
+	m_modelMatrix = Translation(tempX, tempY) * m_modelMatrix;
+}
+
+void Model2D::RotateLeft()
+{
+	int tempX = getFirstCoordinate().first;
+	int tempY = getFirstCoordinate().second;
+	m_modelMatrix = Translation(-tempX, -tempY) * m_modelMatrix;
+	m_modelMatrix = Rotation(-rotation_angle) * m_modelMatrix;
+	m_modelMatrix = Translation(tempX, tempY) * m_modelMatrix;
+}
+
+void Model2D::Scale(double k)
+{
+	int tempX = getFirstCoordinate().first;
+	int tempY = getFirstCoordinate().second;
+	m_modelMatrix = Translation(-tempX, -tempY) * m_modelMatrix;
+	m_modelMatrix = Scaling(k, k) * m_modelMatrix;
+	m_modelMatrix = Translation(tempX, tempY) * m_modelMatrix;
+}
+
+void Model2D::ReflectX()
+{
+	int tempX = getFirstCoordinate().first;
+	int tempY = getFirstCoordinate().second;
+	m_modelMatrix = Translation(-tempX, -tempY) * m_modelMatrix;
+	m_modelMatrix = ReflectOX() * m_modelMatrix;
+	m_modelMatrix = Translation(tempX, tempY) * m_modelMatrix;
+}
+
+void Model2D::ReflectY()
+{
+	int tempX = getFirstCoordinate().first;
+	int tempY = getFirstCoordinate().second;
+	m_modelMatrix = Translation(-tempX, -tempY) * m_modelMatrix;
+	m_modelMatrix = ReflectOY() * m_modelMatrix;
+	m_modelMatrix = Translation(tempX, tempY) * m_modelMatrix;
+}
+
+void Model2D::ReflectXY()
+{
+	int tempX = getFirstCoordinate().first;
+	int tempY = getFirstCoordinate().second;
+	m_modelMatrix = Translation(-tempX, -tempY) * m_modelMatrix;
+	m_modelMatrix = ReflectAll() * m_modelMatrix;
+	m_modelMatrix = Translation(tempX, tempY) * m_modelMatrix;
+}
+
+void Model2D::SetRotation(double grad)
+{
+	rotation_angle += grad * (M_PI / 180);
 }
 
 pair<double, double> Model2D::getFirstCoordinate()

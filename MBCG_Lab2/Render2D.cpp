@@ -7,7 +7,7 @@ Render2D::~Render2D()
 		if (object)
 		{
 			delete object;
-		}	
+		}
 	}
 }
 
@@ -38,13 +38,9 @@ void Render2D::addObject(Model2D* model)
 	m_objects.push_back(model);
 }
 
-void Render2D::applyToObject(Matrix<> transformMat)
+Model2D* Render2D::getObject()
 {
-	int tempX = m_objects[selectIndex]->getFirstCoordinate().first;
-	int tempY = m_objects[selectIndex]->getFirstCoordinate().second;
-	m_objects[selectIndex]->apply(Translation(-tempX, -tempY));
-	m_objects[selectIndex]->apply(transformMat);
-	m_objects[selectIndex]->apply(Translation(tempX, tempY));
+	return m_objects[selectIndex];
 }
 
 void Render2D::nextObject()

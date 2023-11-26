@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 #include <iostream>
 
 using namespace std;
@@ -27,20 +27,20 @@ public:
 
 	Cell& operator()(int i, int j) { return m_cells[i][j]; }
 
-	Matrix& operator = (const Matrix&);		// Перегрузка оператора присваивания
-	Matrix  operator + (const Matrix&);		// Сложение матриц
-	Matrix  operator - (const Matrix&);		// Вычитание матриц
-	Matrix  operator * (const Matrix&);		// Умножение матриц
+	Matrix& operator = (const Matrix&);		
+	Matrix  operator + (const Matrix&);		
+	Matrix  operator - (const Matrix&);		
+	Matrix  operator * (const Matrix&);		
 
-	friend istream& operator >> <> (istream&, Matrix&);			// Перегрузка оператора >> для ввода матрицы
-	friend ostream& operator << <> (ostream&, const Matrix&);	// Перегрузка оператора << для вывода матрицы
+	friend istream& operator >> <> (istream&, Matrix&);			
+	friend ostream& operator << <> (ostream&, const Matrix&);	
 };
 
 template <typename Cell>
 Matrix<Cell>::Matrix(const Matrix<Cell>& M)
 {
 	AllocateCells(M.n_nRows, M.n_nCols);
-	for (int i = 0; i < n_nRows; i++) 
+	for (int i = 0; i < n_nRows; i++)
 	{
 		for (int j = 0; j < n_nCols; j++)
 		{
@@ -67,9 +67,9 @@ Matrix<Cell>::Matrix(int n_nRows, int n_nCols, Cell* list)
 {
 	AllocateCells(n_nRows, n_nCols);
 
-	for (int i = 0; i < n_nRows; i++) 
+	for (int i = 0; i < n_nRows; i++)
 	{
-		for (int j = 0; j < n_nCols; j++) 
+		for (int j = 0; j < n_nCols; j++)
 		{
 			m_cells[i][j] = list[i * n_nCols + j];
 		}
@@ -85,19 +85,19 @@ Matrix<Cell>::~Matrix()
 template <typename Cell>
 Matrix<Cell>& Matrix<Cell>::operator=(const Matrix& M)
 {
-	if (n_nRows != M.n_nRows || n_nCols != M.n_nCols) 
+	if (n_nRows != M.n_nRows || n_nCols != M.n_nCols)
 	{
 		FreeCells();
 		AllocateCells(M.n_nRows, M.n_nCols);
 	}
 
-	for (int i = 0; i < n_nRows; i++) 
+	for (int i = 0; i < n_nRows; i++)
 	{
-		for (int j = 0; j < n_nCols; j++) 
+		for (int j = 0; j < n_nCols; j++)
 		{
 			m_cells[i][j] = M.m_cells[i][j];
 		}
-	}	
+	}
 
 	return *this;
 }
@@ -114,7 +114,7 @@ Matrix<Cell> Matrix<Cell>::operator+(const Matrix& M)
 			{
 				res.m_cells[i][j] += M.m_cells[i][j];
 			}
-		}		
+		}
 	}
 	return res;
 }
@@ -130,8 +130,8 @@ Matrix<Cell> Matrix<Cell>::operator-(const Matrix& M)
 			for (int j = 0; j < n_nCols; j++)
 			{
 				res.m_cells[i][j] -= M.m_cells[i][j];
-			}	
-		}	
+			}
+		}
 	}
 	return res;
 }
@@ -168,7 +168,7 @@ void Matrix<Cell>::AllocateCells(int nRows, int nCols)
 	for (int i = 0; i < n_nRows; i++)
 	{
 		m_cells[i] = new Cell[n_nCols];
-	}	
+	}
 }
 
 template <typename Cell>
@@ -193,7 +193,7 @@ istream& operator >> (istream& fi, Matrix<Cell>& M)
 			fi >> M.m_cells[i][j];
 		}
 	}
-		
+
 	return fi;
 }
 

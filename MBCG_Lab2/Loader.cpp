@@ -2,7 +2,7 @@
 
 Loader::Loader(const std::string& path) : m_path(path)
 {
-    
+
 }
 
 Loader::~Loader()

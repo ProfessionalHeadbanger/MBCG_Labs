@@ -1,7 +1,6 @@
 #pragma once
 #include "Model2D.h"
 #include <wtypes.h>
-#include "AffineTransform.h"
 
 class Render2D
 {
@@ -15,6 +14,6 @@ public:
 
 	void draw(const HDC& hdc);
 	void addObject(Model2D* model);
-	void applyToObject(Matrix<> transformMatrix);
+	Model2D* getObject();
 	void nextObject();
 };

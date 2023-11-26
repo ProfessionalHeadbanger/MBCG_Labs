@@ -1,11 +1,9 @@
-#pragma once
+п»ї#pragma once
 #include <Windows.h>
 #include <windowsx.h>
 
 #include "Render2D.h"
 #include "AffineTransform.h"
-
-# define M_PI 3.14159265358979323846
 
 WNDCLASS createWindowClass(HBRUSH bgColor, HCURSOR cursor, HINSTANCE hInstance, HICON icon, LPCWSTR windowName, WNDPROC windowProcedure);
 LRESULT CALLBACK windowProcedure(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp);
@@ -51,12 +49,14 @@ LRESULT CALLBACK windowProcedure(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
 {
 	HDC hdc = NULL;
 	HBRUSH brush = NULL;
-	const char KEY_Q = 0x51; // отразить по Y
-	const char KEY_W = 0x57; // отразить по X
-	const char KEY_E = 0x45; // отразить по обеим осям
-	const char KEY_X = 0x58; // вращение вправо
-	const char KEY_Z = 0x5A; // вращение влево
-	const char KEY_C = 0x43; // сменить фигуру
+	const char KEY_Q = 0x51; // Y reflection
+	const char KEY_W = 0x57; // X reflection
+	const char KEY_E = 0x45; // XY reflection
+	const char KEY_X = 0x58; // right rotate
+	const char KEY_Z = 0x5A; // left rotate
+	const char KEY_C = 0x43; // change figure
+	const char KEY_R = 0x52; // +5 grad to rotate
+	const char KEY_T = 0x54; // -5 drad to rotate
 
 	switch (msg)
 	{
@@ -78,10 +78,10 @@ LRESULT CALLBACK windowProcedure(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
 		double wheelNow = GET_WHEEL_DELTA_WPARAM(wp);
 
 		if (wheelNow > 0) {
-			render.applyToObject(Scaling(1.1, 1.1));
+			render.getObject()->Scale(1.1);
 		}
 		else {
-			render.applyToObject(Scaling(0.9, 0.9));
+			render.getObject()->Scale(0.9);
 		}
 
 		InvalidateRect(hWnd, nullptr, true);
@@ -92,48 +92,58 @@ LRESULT CALLBACK windowProcedure(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
 		{
 		case VK_UP:
 		{
-			render.applyToObject(Translation(0, -10));
+			render.getObject()->Shift(0, -10);
 			break;
 		}
 		case VK_DOWN:
 		{
-			render.applyToObject(Translation(0, 10));
+			render.getObject()->Shift(0, 10);
 			break;
 		}
 		case VK_LEFT:
 		{
-			render.applyToObject(Translation(-10, 0));
+			render.getObject()->Shift(-10, 0);
 			break;
 		}
 		case VK_RIGHT:
 		{
-			render.applyToObject(Translation(10, 0));
+			render.getObject()->Shift(10, 0);
+			break;
+		}
+		case KEY_R:
+		{
+			render.getObject()->SetRotation(-5);
+			break;
+		}
+		case KEY_T:
+		{
+			render.getObject()->SetRotation(5);
 			break;
 		}
 		case KEY_Q:
 		{
-			render.applyToObject(ReflectOY());
+			render.getObject()->ReflectY();
 			break;
 		}
 		case KEY_W:
 		{
-			render.applyToObject(ReflectOX());
+			render.getObject()->ReflectX();
 			break;
 		}
 		case KEY_E:
 		{
-			render.applyToObject(ReflectAll());
+			render.getObject()->ReflectXY();
 			break;
 		}
 		case KEY_X:
 		{
-			render.applyToObject(Rotation(M_PI / 4));
+			render.getObject()->RotateRight();
 			break;
 
 		}
 		case KEY_Z:
 		{
-			render.applyToObject(Rotation(-M_PI / 4));
+			render.getObject()->RotateLeft();
 			break;
 		}
 		case KEY_C:
