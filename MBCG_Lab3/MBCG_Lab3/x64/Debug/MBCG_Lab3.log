@@ -1,0 +1,3 @@
+﻿S:\MSVS\Visual Studio\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: промежуточный каталог (x64\Debug\) содержит файлы, которые используются совместно с другим проектом (MBCG_Lab3.vcxproj).  Это может привести к ошибкам очистки и перестроения.
+  Source.cpp
+  MBCG_Lab3.vcxproj -> D:\Лабы\МОКГ\MBCG_Lab3\x64\Debug\MBCG_Lab3_Part1.exe
